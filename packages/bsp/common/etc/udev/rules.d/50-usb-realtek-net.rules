@@ -8,6 +8,7 @@ ENV{DEVTYPE}!="usb_device", GOTO="usb_realtek_net_end"
 ENV{REALTEK_NIC_MODE}="1"
 
 # Realtek
+ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="/usr/sbin/usb_modeswitch -KW -v 0bda -p 1a2b"
 ATTR{idVendor}=="0bda", ATTR{idProduct}=="8156", ATTR{bConfigurationValue}!="$env{REALTEK_NIC_MODE}", ATTR{bConfigurationValue}="$env{REALTEK_NIC_MODE}"
 ATTR{idVendor}=="0bda", ATTR{idProduct}=="8155", ATTR{bConfigurationValue}!="$env{REALTEK_NIC_MODE}", ATTR{bConfigurationValue}="$env{REALTEK_NIC_MODE}"
 ATTR{idVendor}=="0bda", ATTR{idProduct}=="8153", ATTR{bConfigurationValue}!="$env{REALTEK_NIC_MODE}", ATTR{bConfigurationValue}="$env{REALTEK_NIC_MODE}"

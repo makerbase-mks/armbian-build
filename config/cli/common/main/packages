@@ -45,6 +45,7 @@ toilet
 tzdata
 u-boot-tools
 usbutils
+usb-modeswitch
 vlan
 wget
 wireless-tools

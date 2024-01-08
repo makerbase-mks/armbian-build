@@ -1,0 +1,88 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: John Doe <john.doe@somewhere.on.planet>
+Date: Sun, 7 Jan 2024 18:37:01 +0000
+Subject: Patching u-boot rockchip64 files arch/arm/dts/rk3328-mkspi.dts
+
+Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+---
+ arch/arm/dts/rk3328-mkspi.dts | 69 ++++++++++
+ 1 file changed, 69 insertions(+)
+
+diff --git a/arch/arm/dts/rk3328-mkspi.dts b/arch/arm/dts/rk3328-mkspi.dts
+new file mode 100644
+index 0000000000..a20e311cc2
+--- /dev/null
++++ b/arch/arm/dts/rk3328-mkspi.dts
+@@ -0,0 +1,69 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Copyright (c) 2017 T-Chip Intelligent Technology Co., Ltd
++ */
++
++/dts-v1/;
++#include "rk3328-roc-cc.dts"
++
++/{
++    model = "Makerbase mkspi";    
++ 
++
++    vcc_sdio: sdmmcio-regulator {       
++        gpios = <&gpio2 RK_PC4 GPIO_ACTIVE_HIGH>;
++		pinctrl-0 = <&sdio_vcc_pin>;
++		pinctrl-names = "default";		
++		states = <1800000 0x0
++			  3300000 0x1>;        
++    };
++
++  
++    vcc_host1_5v: vcc_otg_5v: vcc-host1-5v-regulator {		
++		gpio = <&gpio0 RK_PA2 GPIO_ACTIVE_HIGH>;
++	};
++
++    &gmac2io { 
++        status = "disable";
++    };
++
++};
++
++
++&gmac2phy {
++	phy-supply = <&vcc_phy>;
++	clock_in_out = "output";
++	assigned-clocks = <&cru SCLK_MAC2PHY_SRC>;
++	assigned-clock-rate = <50000000>;
++	assigned-clocks = <&cru SCLK_MAC2PHY>;
++	assigned-clock-parents = <&cru SCLK_MAC2PHY_SRC>;
++ 	status = "okay";
++ };
++
++ &io_domains {
++    vccio4-supply = <&vcc_io>;
++ }
++
++
++&pinctrl {
++ 	pmic {
++ 		pmic_int_l: pmic-int-l {
++			rockchip,pins = <2 RK_PA6 RK_FUNC_GPIO &pcfg_pull_up>;
++ 		};
++ 	};
++ 
++ 	usb2 {
++ 		usb20_host_drv: usb20-host-drv {
++			rockchip,pins = <0 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++	sd {
++		sdio_vcc_pin: sdio-vcc-pin {
++			rockchip,pins = <2 RK_PC4 RK_FUNC_GPIO &pcfg_pull_up>;
++ 		};
++ 	};
++ };
++
++ &uart0 {
++	status = "okay";
++};
+-- 
+Created with Armbian build tools https://github.com/armbian/build
+
